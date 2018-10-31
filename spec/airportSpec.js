@@ -36,5 +36,12 @@ describe("Airport", function(){
     expect(airport.release(plane)).toEqual('Plane is already airborne');
   });
 
+  it("should not receive a plane if the weather is stormy", function() {
+    spyOn(Math, 'random').and.returnValue(5);
+    plane.land()
+    airport.receive(plane)
+    expect(airport.landedPlanes).toEqual([]);
+  })
+
 
 })
