@@ -1,5 +1,7 @@
-function Weather() {}
+function Weather() {
+  this.weather = 0
+}
 
 Weather.prototype.isStormy = function () {
-  return (Math.floor((Math.random() * 6) + 1)) > 4;
+  return this.weather = ((Math.floor((Math.random() * 10))) > 6);
 }
