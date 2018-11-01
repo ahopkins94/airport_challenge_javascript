@@ -13,7 +13,6 @@ describe("Airport", function(){
 
   it("should receive a plane that is not landed", function() {
     spyOn(Math, 'random').and.returnValue(0.5);
-    console.log(airport.weather.isStormy())
     airport.receive(plane)
     expect(airport.landedPlanes).toEqual([plane]);
   });
@@ -32,6 +31,8 @@ describe("Airport", function(){
   });
 
   it("should release a plane that is landed", function() {
+    spyOn(Math, 'random').and.returnValue(0.5);
+    airport.receive(plane)
     plane.land()
     airport.release(plane)
     expect(airport.landedPlanes).toEqual([]);
@@ -50,6 +51,21 @@ describe("Airport", function(){
   it("should raise an error if it cannot receive a plane because it is stormy", function() {
     spyOn(Math, 'random').and.returnValue(0.7);
     expect(airport.receive(plane)).toEqual('It is stormy, cannot land plane');
+  })
+
+  it("should not release a plane if the weather is stormy", function() {
+    spyOn(Math, 'random').and.returnValue(0.7);
+    airport.landedPlanes.push(plane);
+    plane.land()
+    airport.release(plane)
+    expect(airport.landedPlanes).toEqual([plane]);
+  })
+
+  it("should raise an error if the weather is stormy", function() {
+    spyOn(Math, 'random').and.returnValue(0.7);
+    airport.landedPlanes.push(plane);
+    plane.land()
+    expect(airport.release(plane)).toEqual('It is stormy, cannot release plane');
   })
 
 

@@ -14,8 +14,11 @@ Airport.prototype.receive = function (plane) {
 }
 
 Airport.prototype.release = function (plane) {
-  if (plane.isLanded === true) {
-    return this.landedPlanes.pop;
+  if (plane.isLanded === true && this.weather.isStormy() === false) {
+    return this.landedPlanes.pop();
+  } else if (plane.isLanded === false && this.weather.isStormy() === false) {
+    return 'Plane is already airborne';
+  } else if (plane.isLanded === true && this.weather.isStormy() === true) {
+    return 'It is stormy, cannot release plane';
   }
-  return 'Plane is already airborne';
 }
